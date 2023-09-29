@@ -10,12 +10,11 @@ const PORT = config.get('serverPort');
 app.use(express.json());
 app.use('/api/auth', authRouter);
 
-const start = () => {
+const start = async () => {
   try {
-    const dbc = async () => {
-      await mongoose.connect(config.get('modb'));
-    } 
-    console.log(dbc);
+    await mongoose.connect(config.get('modb'));
+    // console.log(dbConect);
+    
     app.listen(PORT, () => {
       console.log('Server started on port: ', PORT);
     });
