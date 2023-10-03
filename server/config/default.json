@@ -1,3 +1,7 @@
 {
   "serverPort": 5000,
+  "user": "alexdbadmin",
+  "pass": "A5oWIGuVnQ096MsV",
+  "secretKey": "jwt-secret-key",
+  "modb": "mongodb+srv://alexdbadmin:A5oWIGuVnQ096MsV@cloud-disk.71i9jpx.mongodb.net/"
 }
