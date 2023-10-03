@@ -1,5 +1,6 @@
 {
   "serverPort": 5000,
+  "filePath": "/Volumes/MAIN/code/React/mearn-d-disk/server/services",
   "user": "alexdbadmin",
   "pass": "A5oWIGuVnQ096MsV",
   "secretKey": "jwt-secret-key",
