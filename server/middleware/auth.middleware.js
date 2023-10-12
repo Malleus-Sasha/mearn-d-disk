@@ -10,9 +10,10 @@ module.exports = (req, res, next) => {
         const token = req.headers.authorization.split(' ')[1];
         console.log(':Auth.M:', req.headers.authorization);
         if (!token) {
-            return res.status(401).json({message: 'Auth error'})
+            return res.status(401).json({message: 'Auth error'});
         }
-        const decoded = jwt.verify(token, config.get('secretKey'))
+        const decoded = jwt.verify(token, config.get('secretKey'));
+        console.log(':AUTH:MidW:decode.', decoded);
         req.user = decoded
         next()
     } catch (e) {

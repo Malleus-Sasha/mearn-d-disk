@@ -12,21 +12,18 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <div className="container">
-        <img src={Logo} alt="" className="navbar__logo"/>
-        <div className="navbar__header">MERN CLOUD</div>
+        <NavLink to='/' className='link-logo'>
+          <img src={Logo} alt="" className="navbar__logo"/>
+          <div className="navbar__header">
+            MERN CLOUD
+          </div>
+        </NavLink>
         {!isAuth && 
           <div className="navbar__login">
             <NavLink to="/login">Login</NavLink>
           </div> }
         {!isAuth && <div className="navbar__registration"><NavLink to="/registration">Registration</NavLink></div> }
         { isAuth && <div className="navbar__login" onClick={() => dispatch(logout()) }>Logout</div> }
-
-        <div className="navbar__login">
-          <NavLink to="/reg">TEST</NavLink>
-        </div>
-        <div className="navbar__login">
-          <NavLink to="/login">LoginT</NavLink>
-        </div>
       </div>
     </div>
   );
