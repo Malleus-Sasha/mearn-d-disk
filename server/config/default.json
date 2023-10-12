@@ -1,4 +1,8 @@
 {
   "serverPort": 5000,
-  "filePath": "/Volumes/MAIN/code/React/mearn-d-disk/server/services"
+  "filePath": "/Volumes/MAIN/code/React/mearn-d-disk/server/services",
+  "user": "alexdbadmin",
+  "pass": "A5oWIGuVnQ096MsV",
+  "secretKey": "jwt-secret-key",
+  "modb": "mongodb+srv://alexdbadmin:A5oWIGuVnQ096MsV@cloud-disk.71i9jpx.mongodb.net/"
 }
