@@ -5,7 +5,7 @@ import File from "./file/File";
 
 const FileList = () => {
 
-    const files = useSelector(state => state.files.files).map(file => <File key={file.id} file={file}/>)
+    const files = useSelector(state => state.files.files).map(file => <File key={file._id} file={file}/>)
     // const files = mockFiles.map(file => <File key={file.id} file={file}/>)
 
     return (
@@ -20,9 +20,9 @@ const FileList = () => {
     );
 };
 
-var mockFiles = [
-    {_id: 1, name: 'direct1', type: 'dir', size: '5gb', date: '05.10.2023'},
-    {_id: 2, name: 'direct2', type: 'jpg', size: '7gb', date: '05.10.2023'},
-];
+// var mockFiles = [
+//     {_id: 1, name: 'direct1', type: 'dir', size: '5gb', date: '05.10.2023'},
+//     {_id: 2, name: 'direct2', type: 'jpg', size: '7gb', date: '05.10.2023'},
+// ];
 
 export default FileList;
