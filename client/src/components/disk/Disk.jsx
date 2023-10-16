@@ -5,16 +5,18 @@ import FileList from "./fileList/FileList";
 import "./disk.scss";
 import Popup from "../popup/Popup";
 import { setCurrentDir, setPopupDisplay } from "../../reducers/fileReducer";
+import Uploader from "./upploader/Uploader";
 
 const Disk = () => {
   const dispatch = useDispatch();
   const currentDir = useSelector((state) => state.files.currentDir);
   const dirStack = useSelector((state) => state.files.dirStack);
   const [dragEnter, setDragEnter] = useState(false);
+  const [sort, setSort] = useState('type')
 
   useEffect(() => {
-    dispatch(getFiles(currentDir));
-  }, [currentDir]);
+    dispatch(getFiles(currentDir, sort));
+  }, [currentDir, sort]);
 
   function showPopupHandler() {
     dispatch(setPopupDisplay("flex"));
@@ -71,12 +73,20 @@ const Disk = () => {
             onChange={(event) => fileUploadHandler(event)}
             type="file"
             id="disk__upload-input"
-            className="disk__upload-input"
-          />
+            className="disk__upload-input"/>
+          <select 
+            value={sort}
+            onChange={(e) => setSort(e.target.value)}
+            className='disk__select'>
+            <option value="name">Name</option>
+            <option value="type">Type</option>
+            <option value="date">Date</option>
+          </select>
         </div>
       </div>
       <FileList />
       <Popup />
+      <Uploader />
     </div>
   ) : (
     <div

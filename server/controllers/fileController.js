@@ -1,8 +1,8 @@
-const fs = require('fs');
+const fs = require("fs");
 const fileService = require("../services/fileService");
 const User = require("../models/User");
 const File = require("../models/File");
-const config = require('config');
+const config = require("config");
 
 class FileController {
   async createDir(req, res) {
@@ -39,6 +39,22 @@ class FileController {
         user: req.user.id,
         parent: req.query.parent,
       });
+      const { sort } = req.query;
+
+      switch (sort) {
+        case "name":
+          files = files.sort({ name: 1 });
+          break;
+        case "type":
+          files = files.sort({ type: 1 });
+          break;
+        case "date":
+          files = files.sort({ date: 1 });
+          break;
+        default:
+          files;
+          break;
+      }
       return res.json(files);
     } catch (e) {
       console.log(e);
@@ -76,18 +92,18 @@ class FileController {
       }
       file.mv(path);
 
-      const type = file.name.split('.').pop()
-      let filePath = file.name
+      const type = file.name.split(".").pop();
+      let filePath = file.name;
       if (parent) {
-          filePath = parent.path + "\\" + file.name
+        filePath = parent.path + "\\" + file.name;
       }
       const dbFile = new File({
-          name: file.name,
-          type,
-          size: file.size,
-          path: filePath,
-          parent: parent?._id,
-          user: user._id
+        name: file.name,
+        type,
+        size: file.size,
+        path: filePath,
+        parent: parent?._id,
+        user: user._id,
       });
 
       await dbFile.save();
@@ -102,30 +118,37 @@ class FileController {
 
   async downloadFile(req, res) {
     try {
-        const file = await File.findOne({_id: req.query.id, user: req.user.id})
-        const path = config.get('filePath') + '\\' + req.user.id + '\\' + file.path + '\\' + file.name
-        if (fs.existsSync(path)) {
-            return res.download(path, file.name)
-        }
-        return res.status(400).json({message: "Download error"})
+      const file = await File.findOne({ _id: req.query.id, user: req.user.id });
+      const path =
+        config.get("filePath") +
+        "\\" +
+        req.user.id +
+        "\\" +
+        file.path +
+        "\\" +
+        file.name;
+      if (fs.existsSync(path)) {
+        return res.download(path, file.name);
+      }
+      return res.status(400).json({ message: "Download error" });
     } catch (e) {
-        console.log(e)
-        res.status(500).json({message: "Download error"})
+      console.log(e);
+      res.status(500).json({ message: "Download error" });
     }
   }
 
   async deleteFile(req, res) {
     try {
-        const file = await File.findOne({_id: req.query.id, user: req.user.id})
-        if (!file) {
-            return res.status(400).json({message: 'file not found'})
-        }
-        fileService.deleteFile(file)
-        await file.remove()
-        return res.json({message: 'File was deleted'})
+      const file = await File.findOne({ _id: req.query.id, user: req.user.id });
+      if (!file) {
+        return res.status(400).json({ message: "file not found" });
+      }
+      fileService.deleteFile(file);
+      await file.remove();
+      return res.json({ message: "File was deleted" });
     } catch (e) {
-        console.log(e)
-        return res.status(400).json({message: 'Dir is not empty'})
+      console.log(e);
+      return res.status(400).json({ message: "Dir is not empty" });
     }
   }
 }
