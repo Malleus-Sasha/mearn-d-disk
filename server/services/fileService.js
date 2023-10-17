@@ -4,8 +4,8 @@ const config = require("config");
 
 class FileService {
   // @{user, path}
-  createDir(file) {
-    const filePath = `${config.get("filePath")}\\${file.user}\\${file.path}`;
+  createDir(req, file) {
+    const filePath = this.getPath(req, file);
     console.log('-FILE.Path-', filePath);
  
     return new Promise((resolve, reject) => {
@@ -22,8 +22,8 @@ class FileService {
     });
   }
 
-  deleteFile(file) {
-    const path = this.getPath(file)
+  deleteFile(req, file) {
+    const path = this.getPath(req, file)
     if (file.type === 'dir') {
         fs.rmdirSync(path)
     } else {
@@ -31,8 +31,8 @@ class FileService {
     }
   }
 
-  getPath(file) {
-      return config.get('filePath') + '\\' + file.user + '\\' + file.path
+  getPath(req, file) {
+    return req.filePath + '\\' + file.user + '\\' + file.path
   }
 }
 
