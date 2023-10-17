@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 import "./navbar.scss";
+import avatarLogo from '../../assets/img/avatar.svg'
 import Logo from "../../assets/img/navbar-logo.svg";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../reducers/userReducer";
 import { showLoader } from "../../reducers/appReducer";
 import { getFiles, searchFiles } from "../../actions/file";
+import { API_URL } from '../../config';
+
 
 const Navbar = () => {
   const currentDir = useSelector(state => state.files.currentDir)
   const isAuth = useSelector((state) => state.user.isAuth);
+  const currentUser = useSelector(state => state.user.currentUser)
   const dispatch = useDispatch();
   const [searchName, setSearchName] = useState("");
   const [searchTimeout, setSearchTimeout] = useState(false);
+  const avatar = currentUser.avatar ? `${API_URL + currentUser.avatar}` : avatarLogo
 
   function searchChangeHandler(e) {
     setSearchName(e.target.value);
@@ -61,6 +66,9 @@ const Navbar = () => {
             Logout
           </div>
         )}
+        {isAuth && <NavLink to='/profile'>
+            <img className="navbar__avatar" src={avatar} alt=""/>
+        </NavLink>}
       </div>
     </div>
   );

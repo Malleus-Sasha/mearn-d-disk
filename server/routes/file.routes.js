@@ -12,5 +12,6 @@ router.post('/download', authMiddleware, fileController.downloadFile);
 router.get('/search', authMiddleware, fileController.searchFile);
 router.get('/avatar', authMiddleware, fileController.uploadAvatar);
 router.delete('/', authMiddleware, fileController.deleteFile);
+router.delete('/avatar', authMiddleware, fileController.deleteAvatar)
 
 module.exports = router;

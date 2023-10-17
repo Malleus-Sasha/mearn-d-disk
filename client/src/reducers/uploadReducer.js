@@ -10,8 +10,6 @@ const defaultState = {
 };
 
 export default function uploadReducer(state = defaultState, action) {
-  console.log("[UploaderReducer]");
-
   switch (action.type) {
     case SHOW_UPLOADER:
       return { ...state, isVisible: true };
