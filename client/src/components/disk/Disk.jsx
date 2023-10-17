@@ -4,7 +4,7 @@ import { getFiles, uploadFile } from "../../actions/file";
 import FileList from "./fileList/FileList";
 import "./disk.scss";
 import Popup from "../popup/Popup";
-import { setCurrentDir, setPopupDisplay } from "../../reducers/fileReducer";
+import { setCurrentDir, setFileView, setPopupDisplay } from "../../reducers/fileReducer";
 import Uploader from "./upploader/Uploader";
 
 const Disk = () => {
@@ -83,6 +83,7 @@ const Disk = () => {
             type="file"
             id="disk__upload-input"
             className="disk__upload-input"/>
+        </div>
           <select 
             value={sort}
             onChange={(e) => setSort(e.target.value)}
@@ -91,7 +92,8 @@ const Disk = () => {
             <option value="type">Type</option>
             <option value="date">Date</option>
           </select>
-        </div>
+          <button className="disk__plate" onClick={() => dispatch(setFileView('plate'))}/>
+          <button className="disk__list" onClick={() => dispatch(setFileView('list'))}/>
       </div>
       <FileList />
       <Popup />

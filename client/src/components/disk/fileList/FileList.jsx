@@ -6,10 +6,21 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const FileList = () => {
   const files = useSelector((state) => state.files.files);
+  const fileView = useSelector((state) => state.files.view);
   // const files = mockFiles.map(file => <File key={file.id} file={file}/>)
   if (files.length === 0) {
     return (
         <div className='loader'>No files found.</div>
+    )
+  }
+
+  if (fileView === "plate") {
+    return (
+      <div className='fileplate'>
+          {files.map(file =>
+              <File key={file._id} file={file}/>
+          )}
+      </div>
     )
   }
 
