@@ -3,6 +3,7 @@ const fileService = require("../services/fileService");
 const User = require("../models/User");
 const File = require("../models/File");
 const config = require("config");
+const { listenerCount } = require("stream");
 
 class FileController {
   async createDir(req, res) {
@@ -35,7 +36,7 @@ class FileController {
 
   async getFiles(req, res) {
     try {
-      const files = await File.find({
+      let files = await File.find({
         user: req.user.id,
         parent: req.query.parent,
       });
@@ -43,16 +44,16 @@ class FileController {
 
       switch (sort) {
         case "name":
-          files = files.sort({ name: 1 });
+          files = await File.find({user: req.user.id, parent: req.query.parent}).sort({name:1});
           break;
         case "type":
-          files = files.sort({ type: 1 });
+          files = await File.find({user: req.user.id, parent: req.query.parent}).sort({type:1});
           break;
         case "date":
-          files = files.sort({ date: 1 });
+          files = await File.find({user: req.user.id, parent: req.query.parent}).sort({date:1});
           break;
         default:
-          files;
+          files = await File.find({user: req.user.id, parent: req.query.parent});
           break;
       }
       return res.json(files);
@@ -149,6 +150,18 @@ class FileController {
     } catch (e) {
       console.log(e);
       return res.status(400).json({ message: "Dir is not empty" });
+    }
+  }
+
+  async searchFile(req, res) {
+    try {
+      const searchName = req.query.search
+      let files = await File.find({user: req.user.id})
+      files = files.filter(file => file.name.includes(searchName))
+      return res.json(files)
+    } catch (e) {
+      console.log(e)
+      return res.status(400).json({message: 'Search error'})
     }
   }
 }
